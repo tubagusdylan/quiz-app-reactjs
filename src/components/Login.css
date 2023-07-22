@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.container {
+  width: 400px;
+  margin: 25vh auto;
+  box-shadow: 1px 2px 5px 1px grey;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.title {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid grey;
+}
+
+.body {
+  width: 100%;
+  padding: 20px;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+input {
+  display: inline-block;
+  width: 350px;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-bottom: 2px solid rgb(206, 206, 206);
+  font-size: 20px;
+  outline: none;
+}
+
+input:focus {
+  border-bottom: 2px solid blue;
+}
+
+.container p {
+  text-align: left;
+  margin-left: 2rem;
+  color: red;
+}
+
+.container span {
+  display: block;
+  margin-left: 2rem;
+  padding: 20px 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+span:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+.button-login {
+  margin-bottom: 20px;
+  width: 85%;
+  background-color: rgb(47, 47, 184);
+  padding: 10px 5px;
+  color: whitesmoke;
+  border-radius: 50px;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+}
+
+.button-login:active {
+  background-color: rgb(15, 15, 79);
+}
