@@ -1,17 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Noto Sans", sans-serif;
+.background {
+  height: 100vh;
+  background-color: whitesmoke;
+  padding-top: 12rem;
 }
 
-.container {
+.container-login {
   width: 400px;
-  margin: 25vh auto;
+  background-color: white;
+  margin: auto;
   box-shadow: 1px 2px 5px 1px grey;
   border-radius: 5px;
   text-align: center;
+}
+
+.success {
+  color: rgb(31, 99, 31);
 }
 
 .title {
@@ -42,13 +45,13 @@ input:focus {
   border-bottom: 2px solid blue;
 }
 
-.container p {
+.container-login p {
   text-align: left;
   margin-left: 2rem;
   color: red;
 }
 
-.container span {
+.container-login span {
   display: block;
   margin-left: 2rem;
   padding: 20px 0;
@@ -75,4 +78,10 @@ span:hover {
 
 .button-login:active {
   background-color: rgb(15, 15, 79);
+}
+
+.link-black {
+  color: black;
+  text-decoration: none;
+  font-size: 20px;
 }
