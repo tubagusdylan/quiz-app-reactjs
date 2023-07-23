@@ -1,64 +1,73 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import { getQuizList } from "../api/quiz";
-import "./Play.css";
+import { questions } from "../api/dataQuestion";
 import { Loading } from "../components/Loading";
-
-function Question(props) {
-  const { question, option, currQuestion, correct } = props;
-
-  function Options() {
-    return option.map((value, index) => {
-      return (
-        <div className="option-item" key={index}>
-          <button>{value}</button>
-        </div>
-      );
-    });
-  }
-
-  return (
-    <>
-      <div className="question-body">
-        <h3>{question[currQuestion].question}</h3>
-        <div className="option-container">
-          <Options />
-        </div>
-      </div>
-    </>
-  );
-}
+import { Timer } from "../utils/Timer";
+import { Question } from "../components/Question";
+import "./Play.css";
 
 export function Play() {
-  const [questions, setQuestion] = useState([]);
   const [currQuestion, setCurrQuestion] = useState(0);
   const [option, setOption] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [totalCorrect, setTotalCorrect] = useState(0);
+
+  const { secondLeft, start } = Timer();
 
   useEffect(() => {
-    getQuizList().then((result) => {
-      setQuestion(result);
-      setOption([result[currQuestion].correct_answer, ...result[currQuestion].incorrect_answers]);
-    });
+    if (currQuestion < questions.length) {
+      setOption([questions[currQuestion].correct_answer, ...questions[currQuestion].incorrect_answers]);
+      start(15);
+      selectedOption === questions[currQuestion].correct_answer ? setTotalCorrect(totalCorrect + 1) : setTotalCorrect(totalCorrect);
+    } else {
+      return;
+    }
   }, [currQuestion]);
+
+  function handleSelect(value) {
+    if (currQuestion < questions.length) {
+      setSelectedOption(value);
+      setCurrQuestion(currQuestion + 1);
+    } else {
+      setCurrQuestion(currQuestion);
+      console.log(totalCorrect);
+    }
+  }
 
   return (
     <>
       <div className="container-play">
         <nav>
           <div className="sign">
-            <p>
-              {currQuestion + 1}/{questions.length}
-            </p>
+            {currQuestion === 10 ? (
+              <p>10/{questions.length}</p>
+            ) : (
+              <p>
+                {currQuestion + 1}/{questions.length}
+              </p>
+            )}
           </div>
-          <div className="category">
+          <div>
             <h2>Quiz</h2>
           </div>
           <div className="time">
-            <p>Time</p>
+            <p>{secondLeft}</p>
           </div>
         </nav>
-        {questions.length !== 0 ? <Question question={questions} option={option} currQuestion={currQuestion} correct={questions[currQuestion]?.correct_answer} /> : <Loading />}
+        {questions.length !== 0 ? (
+          <Question
+            question={questions}
+            option={option}
+            currQuestion={currQuestion}
+            onSelect={(value) => {
+              handleSelect(value);
+            }}
+          />
+        ) : (
+          <Loading />
+        )}
       </div>
     </>
   );

@@ -2,21 +2,28 @@
 import { Link } from "react-router-dom";
 import { user } from "../api/data";
 import "./Home.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { QuizDetails } from "../components/QuizDetails";
-import { useEffect } from "react";
+import { getQuizList } from "../api/quiz";
+import { questions } from "../api/dataQuestion";
 
 export function Home() {
   const [isHidden, setIsHidden] = useState(true);
+  const [dataQuestion, setDataQuestion] = useState([]);
 
   function handleDetails() {
     setIsHidden(!isHidden);
   }
 
   useEffect(() => {
-    user.status = localStorage.getItem("status");
-    console.log(user.status);
+    getQuizList().then((result) => {
+      setDataQuestion(result);
+    });
   }, []);
+
+  function handleClick() {
+    questions.push(...dataQuestion);
+  }
 
   return (
     <>
@@ -25,7 +32,7 @@ export function Home() {
         {user.status === "login" ? (
           <>
             <button className="button-home">
-              <Link className="link" to="/play">
+              <Link className="link" to="/play" onClick={handleClick}>
                 Play
               </Link>
             </button>
