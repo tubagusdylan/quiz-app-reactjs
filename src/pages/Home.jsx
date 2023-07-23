@@ -4,13 +4,19 @@ import { user } from "../api/data";
 import "./Home.css";
 import { useState } from "react";
 import { QuizDetails } from "../components/QuizDetails";
+import { useEffect } from "react";
 
 export function Home() {
-  const [isShow, setIsShow] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
 
   function handleDetails() {
-    setIsShow(!isShow);
+    setIsHidden(!isHidden);
   }
+
+  useEffect(() => {
+    user.status = localStorage.getItem("status");
+    console.log(user.status);
+  }, []);
 
   return (
     <>
@@ -25,7 +31,7 @@ export function Home() {
             </button>
             <br></br>
             <span onClick={handleDetails}>Show Detail Question...</span>
-            <QuizDetails hidden={isShow} />
+            <QuizDetails hidden={isHidden} />
           </>
         ) : (
           <button className="button-home">

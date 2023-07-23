@@ -25,6 +25,7 @@ export function Login() {
       setPassword("");
       setStatus("success");
       setErr(null);
+      localStorage.setItem("status", "login");
     } catch (error) {
       setUsername("");
       setPassword("");
