@@ -7,7 +7,6 @@ import { Loading } from "../components/Loading";
 import { Timer } from "../utils/Timer";
 import { Question } from "../components/Question";
 import "./Play.css";
-import { useRef } from "react";
 
 export function Play() {
   const [currQuestion, setCurrQuestion] = useState(0);
