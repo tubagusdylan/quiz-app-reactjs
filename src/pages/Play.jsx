@@ -7,6 +7,7 @@ import { Loading } from "../components/Loading";
 import { Timer } from "../utils/Timer";
 import { Question } from "../components/Question";
 import "./Play.css";
+import { useRef } from "react";
 
 export function Play() {
   const [currQuestion, setCurrQuestion] = useState(0);
@@ -20,20 +21,15 @@ export function Play() {
     if (currQuestion < questions.length) {
       setOption([questions[currQuestion].correct_answer, ...questions[currQuestion].incorrect_answers]);
       start(15);
-      selectedOption === questions[currQuestion].correct_answer ? setTotalCorrect(totalCorrect + 1) : setTotalCorrect(totalCorrect);
-    } else {
-      return;
+      if (currQuestion !== 0) {
+        selectedOption === questions[currQuestion - 1].correct_answer ? setTotalCorrect(totalCorrect + 1) : setTotalCorrect(totalCorrect);
+      }
     }
   }, [currQuestion]);
 
   function handleSelect(value) {
-    if (currQuestion < questions.length) {
-      setSelectedOption(value);
-      setCurrQuestion(currQuestion + 1);
-    } else {
-      setCurrQuestion(currQuestion);
-      console.log(totalCorrect);
-    }
+    setSelectedOption(value);
+    setCurrQuestion(currQuestion + 1);
   }
 
   return (
@@ -41,7 +37,7 @@ export function Play() {
       <div className="container-play">
         <nav>
           <div className="sign">
-            {currQuestion === 10 ? (
+            {currQuestion >= 10 ? (
               <p>10/{questions.length}</p>
             ) : (
               <p>
@@ -64,6 +60,8 @@ export function Play() {
             onSelect={(value) => {
               handleSelect(value);
             }}
+            selectedOption={selectedOption}
+            totalCorrect={totalCorrect}
           />
         ) : (
           <Loading />

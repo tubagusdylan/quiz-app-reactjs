@@ -1,8 +1,19 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
+import { useState } from "react";
+import "./Question.css";
+
 export function Question(props) {
-  const { question, option, currQuestion, onSelect } = props;
+  const { question, option, currQuestion, onSelect, selectedOption, totalCorrect } = props;
+
+  const [total, setTotal] = useState(totalCorrect);
+  const [onShow, setOnShow] = useState(false);
+
+  function handleResult() {
+    selectedOption === question[currQuestion - 1].correct_answer ? setTotal(total + 1) : setTotal(total);
+    setOnShow(true);
+  }
 
   return (
     <>
@@ -21,7 +32,16 @@ export function Question(props) {
             </div>
           </>
         ) : (
-          <h1>Coba</h1>
+          <div className="result">
+            <button onClick={handleResult} className="btn-result" hidden={onShow}>
+              Show Result
+            </button>
+            <div hidden={!onShow} className="result-body">
+              <h2>Result</h2>
+              <p>Your result</p>
+              <h1>{(total + totalCorrect) * 10}</h1>
+            </div>
+          </div>
         )}
       </div>
     </>
