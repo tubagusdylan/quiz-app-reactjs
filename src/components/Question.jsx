@@ -3,6 +3,8 @@
 
 import { useState } from "react";
 import "./Question.css";
+import { Link } from "react-router-dom";
+import { questions } from "../api/dataQuestion";
 
 export function Question(props) {
   const { question, option, currQuestion, onSelect, selectedOption, totalCorrect } = props;
@@ -13,6 +15,11 @@ export function Question(props) {
   function handleResult() {
     selectedOption === question[currQuestion - 1].correct_answer ? setTotal(total + 1) : setTotal(total);
     setOnShow(true);
+  }
+
+  function handleCleanup() {
+    questions.splice(0, questions.length);
+    setTotal(0);
   }
 
   return (
@@ -35,6 +42,11 @@ export function Question(props) {
           <div className="result">
             <button onClick={handleResult} className="btn-result" hidden={onShow}>
               Show Result
+            </button>
+            <button hidden={!onShow} className="btn-result" onClick={handleCleanup}>
+              <Link className="link" to="/">
+                Back to Home
+              </Link>
             </button>
             <div hidden={!onShow} className="result-body">
               <h2>Result</h2>
